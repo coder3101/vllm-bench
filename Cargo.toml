@@ -1,0 +1,46 @@
+[package]
+name = "vllm-bench"
+version = "0.1.0"
+edition = "2021"
+description = "High-performance benchmark client for vLLM serving endpoints"
+license = "Apache-2.0"
+
+[[bin]]
+name = "vllm-bench"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+base64 = "0.22"
+bytes = "1"
+chrono = "0.4"
+clap = { version = "4", features = ["derive"] }
+dirs = "5"
+futures = "0.3"
+hf-hub = { version = "0.5", default-features = false, features = ["tokio", "ureq", "rustls-tls"] }
+image = { version = "0.25", default-features = false, features = ["jpeg"] }
+indicatif = "0.17"
+rand = "0.8"
+rand_distr = "0.4"
+rayon = "1"
+reqwest = { version = "0.12", default-features = false, features = ["json", "stream", "rustls-tls", "blocking", "http2"] }
+rlimit = "0.11.0"
+rustc-hash = "1"
+serde = { version = "1", features = ["derive", "rc"] }
+serde_json = { version = "1", features = ["raw_value"] }
+thiserror = "2"
+tiktoken-rs = "0.9"
+tokenizers = { version = "0.22", default-features = false, features = ["progressbar", "onig", "http"] }
+tokio = { version = "1", features = ["full"] }
+tokio-stream = "0.1"
+url = "2"
+uuid = { version = "1", features = ["v4"] }
+
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+mimalloc = "0.1"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
